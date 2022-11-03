@@ -1,5 +1,6 @@
 import gym
 import time
+import torch
 
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
@@ -11,7 +12,12 @@ from stable_baselines3.common.callbacks import EvalCallback
 # Play BipedalWalker
 env_name = 'BipedalWalker-v3'
 env = gym.make(env_name)
-model = PPO("MlpPolicy", env, verbose=1)
+model = PPO(
+    "MlpPolicy",
+    env,
+    verbose=1,
+    device = torch.device("mps"),
+)
 
 # Create an evaluation callback with the same env, called every 10000 iterations
 callbacks = []
