@@ -14,8 +14,8 @@ if __name__ == "__main__":
     env = gym.make("BipedalWalker-v3", render_mode='rgb_array')
     # Vectorized environments allow to easily multiprocess training
     # Note that SubprocVecEnv has to be put in a `if __name__ == "__main__":`
-    #num_cpu = 4
-    #env = SubprocVecEnv([lambda: env for i in range(4)])
+    num_cpu = 4
+    env = SubprocVecEnv([lambda: env for i in range(4)])
 
     # Create an evaluation callback with the same env, called every 10000 iterations
     callbacks = []
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print("Start to learn something")
     model = PPO("MlpPolicy", env, verbose=1, device=device)
     model.learn(
-        total_timesteps=5e5,
+        total_timesteps=1e6,
         tb_log_name="bipedalwalker_" + str(time.time()),
     )
 
