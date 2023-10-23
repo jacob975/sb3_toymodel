@@ -1,19 +1,20 @@
 import gymnasium as gym
-import torch
 from stable_baselines3 import PPO
+# Use CPU
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-# Play BipedalWalker
-env_name = 'BipedalWalker-v3'
-env = gym.make(env_name, render_mode='rgb_array')
-# Load weights
-model = PPO.load("bipedalwalker_policy", env, device=torch.device("cpu"))
-model.set_env(env)
+env = gym.make("CartPole-v1", render_mode='rgb_array')
+
+print("Start to learn something")
+model = PPO("MlpPolicy", env, verbose=1)
+model.learn(total_timesteps=10_000)
 
 print("Start to evaluate the model")
 vec_env = model.get_env()
 obs = vec_env.reset()
 for i in range(1000):
-    action, _states = model.predict(obs, deterministic=False)
+    action, _states = model.predict(obs, deterministic=True)
     obs, reward, done, info = vec_env.step(action)
     vec_env.render('human')
     # VecEnv resets automatically
@@ -21,4 +22,3 @@ for i in range(1000):
     #   obs = env.reset()
 
 env.close()
-

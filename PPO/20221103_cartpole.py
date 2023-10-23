@@ -1,3 +1,4 @@
+# This model is deprecated.
 import gym
 from gym import wrappers
 
