@@ -7,6 +7,10 @@ I play toy RL models in [stable-baselines3](https://stable-baselines3.readthedoc
 conda create -n rl-exp python=3.10 -y
 conda activate rl-exp
 ```
++ Install `swig` and `cmake`
+```bash
+sudo apt install swig cmake
+```
 + Install `torch` following the instructions in [Pytorch](https://pytorch.org/)
 + Install the required packages below
 ```bash
